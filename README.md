@@ -82,90 +82,28 @@ DOCKERHUB_TOKEN
 ### Dockerfile
 
 * Create a file named "Dockerfile" in the root directory of the project
-* Add the following:
-
-```dockerfile
-
-FROM python:3.9-alpine3.13
-LABEL maintainer="mukund"
-
-ENV PYTHONBUFFERED 1
-
-COPY ./requirements.txt /tmp/requirements.txt
-COPY ./app app
-WORKDIR /app
-EXPOSE 8000
-
-RUN python -m venv /py && \
-    /py/bin/pip install --upgrade pip && \
-    /py/bin/pip install -r /tmp/requirements.txt && \
-    rm -rf /tmp && \
-    adduser \
-        --disabled-password \
-        --no-create-home \
-        django-user
-    
-    ENV PATH="/py/bin:$PATH"
-
-    USER django-user
-
-```
+* Add the contents from https://github.com/mukund-9652/recipe-app-api/blob/master/Dockerfile
 
 ### DockerIgnore
 
 * Create a file named ".dockerignore"
-* Add the following:
-```file
-
-# Git
-.git
-.gitignore
-
-#Docker
-.docker
-
-#Python
-app/__pycache__/
-app/*/__pycache__/
-app/*/*/__pycache__/
-app/*/*/*/__pycache__/
-.env/
-.venv/
-venv/
-
-```
+* Add the contents from https://github.com/mukund-9652/recipe-app-api/blob/master/.dockerignore
 
 ### Build Docker
 
 Now Run the following command in the terminal
 ```bash
-recipe-app-api> docker build .
+docker build .
 ```
 ### Docker Compose
 * Create a Docker Compose file "docker-compose.yml"
 
-* Add the content in the file
-```yml
-
-version: "3.9"
-
-services:
-  app:
-    build:
-      context: .
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./app:/app
-    command: >
-      sh -c "python3 manage.py runserver 0.0.0.0:8000"
-  
-```
+* Add the content the contents from https://github.com/mukund-9652/recipe-app-api/blob/master/Dockerfile
 
 ### Build Docker Compose
 * Run the following command in termial to build the docker compose
 ```bash
-recipe-app-api> docker-compose build
+docker-compose build
 ```
 
 ## Virtual Environment
