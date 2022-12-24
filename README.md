@@ -88,3 +88,15 @@ recipe-app-api> source env/Scripts/activate
 ```bash
 (env) recipe-app-api> pip freeze > requirement.txt
 ```
+
+### Django App
+
+Start the project with:
+```bash
+(env) recipe-app-api> django-admin startproject recipeapp .
+```
+
+Run the project server with:
+```bash
+(env) recipe-app-api> python3 manage.py runserver
+```
