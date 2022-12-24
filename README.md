@@ -2,11 +2,11 @@
 
 # Menu
 
-*[Requirements](#requirements)
-*[Installation](#installation)
-*[Initial Setup](#initial-setup)
-*[Virtual Environment](#virtual-environment)
-*[Django Setup](#django-setup)
+* [Requirements](#requirements)
+* [Installation](#installation)
+* [Initial Setup](#initial-setup)
+* [Virtual Environment](#virtual-environment)
+* [Django Setup](#django-setup)
 
 
 ## Requirements:
