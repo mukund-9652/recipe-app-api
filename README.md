@@ -5,6 +5,7 @@
 * [Requirements](#requirements)
 * [Installation](#installation)
 * [Initial Setup](#initial-setup)
+* [Docker Setup](#docker-setup)
 * [Virtual Environment](#virtual-environment)
 * [Django Setup](#django-setup)
 
@@ -53,6 +54,118 @@ recipe-app-api> git add .
 recipe-app-api> git commit -m "first commit"
 recipe-app-api> git remote add origin <add your repository link here>
 recipe-app-api> git push -u origin master
+```
+
+## Docker Setup
+
+### Docker Hub:
+* Create a new authentication token and save the token id
+
+### Github Repository
+* In your github repository go to settings -> secrets
+* Docker User Secret
+- Click New Repository Secret
+- Add this value to name
+```bash
+DOCKERHUB_USER
+```
+- Add your dockerhub user name to the value
+
+* Docker Token
+- Click New Repository Secret
+- Add this value to name
+```bash
+DOCKERHUB_TOKEN
+```
+- Add your dockerhub generated token to the value
+
+### Dockerfile
+
+* Create a file named "Dockerfile" in the root directory of the project
+* Add the following:
+
+```dockerfile
+
+FROM python:3.9-alpine3.13
+LABEL maintainer="mukund"
+
+ENV PYTHONBUFFERED 1
+
+COPY ./requirements.txt /tmp/requirements.txt
+COPY ./app app
+WORKDIR /app
+EXPOSE 8000
+
+RUN python -m venv /py && \
+    /py/bin/pip install --upgrade pip && \
+    /py/bin/pip install -r /tmp/requirements.txt && \
+    rm -rf /tmp && \
+    adduser \
+        --disabled-password \
+        --no-create-home \
+        django-user
+    
+    ENV PATH="/py/bin:$PATH"
+
+    USER django-user
+
+```
+
+### DockerIgnore
+
+* Create a file named ".dockerignore"
+* Add the following:
+```file
+
+# Git
+.git
+.gitignore
+
+#Docker
+.docker
+
+#Python
+app/__pycache__/
+app/*/__pycache__/
+app/*/*/__pycache__/
+app/*/*/*/__pycache__/
+.env/
+.venv/
+venv/
+
+```
+
+### Build Docker
+
+Now Run the following command in the terminal
+```bash
+recipe-app-api> docker build .
+```
+### Docker Compose
+* Create a Docker Compose file "docker-compose.yml"
+
+* Add the content in the file
+```yml
+
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app
+    command: >
+      sh -c "python3 manage.py runserver 0.0.0.0:8000"
+  
+```
+
+### Build Docker Compose
+* Run the following command in termial to build the docker compose
+```bash
+recipe-app-api> docker-compose build
 ```
 
 ## Virtual Environment
