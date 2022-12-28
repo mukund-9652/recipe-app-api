@@ -12,6 +12,7 @@ from django.test import SimpleTestCase
 @patch("core.management.commands.wait_for_db.Command.check")
 class CommandTests(SimpleTestCase):
     def test_wait_for_db_ready(self, patched_check):
+        # Test to check if the Database is online or not
         patched_check.return_value = True
 
         call_command("wait_for_db")
