@@ -205,22 +205,23 @@ class PrivateUserApiTests(TestCase):
         self.assertEqual(
             res.data, {"name": self.user.name, "email": self.user.email}
         )
+
     def test_post_me_not_available(self):
-        # Test POST METHOD IS DESABLED OR NOT 
-        
-        res=self.client.post(ME_URL)
-        
+        # Test POST METHOD IS DESABLED OR NOT
+
+        res = self.client.post(ME_URL)
+
         self.assertEqual(res.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-        
+
     def test_update_user_profile(self):
-        # Test to update user profile for authenticated user 
-        payload={
-            'name': "updated name",
-            'password': 'newpassword123',
-        }    
-        res=self.client.patch(ME_URL, payload)
-        
+        # Test to update user profile for authenticated user
+        payload = {
+            "name": "updated name",
+            "password": "newpassword123",
+        }
+        res = self.client.patch(ME_URL, payload)
+
         self.user.refresh_from_db()
-        self.assertEqual(self.user.name, payload['name'])
-        self.assertTrue(self.user.check_password(payload['password']))
+        self.assertEqual(self.user.name, payload["name"])
+        self.assertTrue(self.user.check_password(payload["password"]))
         self.assertEqual(res.status_code, status.HTTP_200_OK)
