@@ -37,7 +37,7 @@ class PubllicRecipeAPITests(TestCase):
     # Test to check un authenticated requests
 
     def setUp(self):
-        self.client = APIClient
+        self.client = APIClient()
 
     def test_auth_required(self):
         # Test authentication is required
